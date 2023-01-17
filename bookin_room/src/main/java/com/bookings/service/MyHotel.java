@@ -33,7 +33,7 @@ public class MyHotel implements BookingManager {
     }
 
     @Override
-    public boolean isRoomAvailable(Integer room, LocalDate date) {
+    public synchronized boolean isRoomAvailable(Integer room, LocalDate date) {
         log.info("isRoomAvailable-RUN  room: {}, date: {}", room, date );
         boolean result = false;
         if(!roomsHotel.containsKey(room)) {
@@ -49,7 +49,7 @@ public class MyHotel implements BookingManager {
     }
 
     @Override
-    public void addBooking(String guest, Integer room, LocalDate date) {
+    public synchronized void addBooking(String guest, Integer room, LocalDate date) {
         log.info("addBooking-RUN  guest: {}, room: {}, date: {}", guest, room, date );
 
         if(roomsHotel.get(room) == null ){
@@ -62,7 +62,7 @@ public class MyHotel implements BookingManager {
     }
 
     @Override
-    public List<Integer> getAvailableRooms(LocalDate localDate ){
+    public synchronized List<Integer> getAvailableRooms(LocalDate localDate ){
 
         log.info("getAvailableRooms-RUN  date: {} ", localDate );
         List<Integer> result = new ArrayList<>();
@@ -82,7 +82,7 @@ public class MyHotel implements BookingManager {
     }
 
 
-    public void addRooms(List<Integer> listRooms ) {
+    public synchronized void addRooms(List<Integer> listRooms ) {
         log.info("addRooms-RUN  listRooms: {} ", listRooms );
         for(Integer room : listRooms ) {
            roomsHotel.put(room, null);
